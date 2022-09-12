@@ -1,5 +1,5 @@
 <?php
-return array (
+return array (
   'utf_mode' => 
   array (
     'value' => true,
@@ -45,9 +45,9 @@
       array (
         'className' => '\\Bitrix\\Main\\DB\\MysqliConnection',
         'host' => 'localhost',
-        'database' => 'user_bitrix_learn',
-        'login' => 'user_bitrix_learn',
-        'password' => '6ummhDILE9ccek3I',
+        'database' => 'user_dev_bitrix_learn',
+        'login' => 'user_dev_bitrix_learn',
+        'password' => 'loDzNZ0KYyLwE1ck',
         'options' => 2.0,
       ),
     ),

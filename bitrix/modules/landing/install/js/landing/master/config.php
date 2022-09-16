@@ -87,6 +87,7 @@ return [
 		$pathJS . '/ui/field/font_field.js',
 		$pathJS . '/ui/field/html_field.js',
 		$pathJS . '/ui/field/embed_field.js',
+		$pathJS . '/ui/field/embed_bg_field.js',
 		$pathJS . '/ui/field/date_field.js',
 		$pathJS . '/ui/field/block_source_field.js',
 		$pathJS . '/ui/field/dynamic_image_field.js',
@@ -186,6 +187,8 @@ return [
 	],
 	'rel' => [
 		'main.core',
+		'ui.fonts.opensans',
+		'ui.design-tokens',
 		'main.polyfill.intersectionobserver',
 		'main.polyfill.customevent',
 		'ui.buttons',

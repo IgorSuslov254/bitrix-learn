@@ -50,9 +50,16 @@ Manager::setPageView(
 	'BodyClass',
 	'no-all-paddings landing-tile no-background'
 );
+
 \Bitrix\Main\UI\Extension::load([
-	'sidepanel', 'landing_master', 'action_dialog', 'ui.buttons', 'ui.design-tokens'
+	'ui.design-tokens',
+	'ui.fonts.opensans',
+	'sidepanel',
+	'landing_master',
+	'action_dialog',
+	'ui.buttons',
 ]);
+
 \Bitrix\Main\Page\Asset::getInstance()->addCSS(
 	'/bitrix/components/bitrix/landing.site_edit/templates/.default/landing-forms.css'
 );
@@ -241,6 +248,7 @@ if ($arParams['TYPE'] !== 'KNOWLEDGE' && $isCrm && (($arParams['OLD_TILE'] ?? 'N
 			$arResult['EXPORT_DISABLED'] === 'Y'
 			? [
 				'text' => $component->getMessageType('LANDING_TPL_ACTION_EXPORT'),
+				'access' => 'export',
 				'onclick' => 'landingExportDisabled();'
 			]
 			: [
@@ -420,6 +428,7 @@ if ($arParams['TYPE'] !== 'KNOWLEDGE' && $isCrm && (($arParams['OLD_TILE'] ?? 'N
 									editSite: '<?= htmlspecialcharsbx(CUtil::jsEscape($urlEdit)) ?>',
 									editSiteDesign: '<?= htmlspecialcharsbx(CUtil::jsEscape($urlEditDesign)) ?>',
 								 	exportSite: '<?= htmlspecialcharsbx(CUtil::jsEscape($item['EXPORT_URI'])) ?>',
+								 	isExportSiteDisabled: <?= ($item['ACCESS_EXPORT'] !== 'Y') ? 'true' : 'false' ?>,
 									publicPage: '#',
 								 	isActive: <?= ($item['ACTIVE'] === 'Y') ? 'true' : 'false' ?>,
 								 	isDeleted: <?= ($item['DELETED'] === 'Y') ? 'true' : 'false' ?>,
@@ -815,7 +824,7 @@ if ($arParams['TYPE'] !== 'KNOWLEDGE' && $isCrm && (($arParams['OLD_TILE'] ?? 'N
 				params.exportSite
 					? {
 						text: '<?= CUtil::jsEscape($component->getMessageType('LANDING_TPL_ACTION_EXPORT'));?>',
-						disabled: params.isDeleted,
+						disabled: params.isExportSiteDisabled,
 						<?if ($arResult['EXPORT_DISABLED'] == 'Y'):?>
 						onclick: function(event)
 						{

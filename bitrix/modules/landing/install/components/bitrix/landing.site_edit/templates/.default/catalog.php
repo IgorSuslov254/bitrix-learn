@@ -18,8 +18,12 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\UI\Extension;
 
 Loc::loadMessages(__DIR__ . '/template.php');
-Extension::load('ui.buttons');
-\CJSCore::init(['landing_master']);
+Extension::load([
+	'ui.design-tokens',
+	'ui.fonts.opensans',
+	'ui.buttons',
+	'landing_master',
+]);
 
 if ($arResult['ERRORS'])
 {
@@ -87,7 +91,7 @@ else
 	<form
 		action="<?= \htmlspecialcharsbx($uriSave->getUri());?>"
 		method="post"
-		class="ui-form ui-form-section ui-form-gray-padding landing-form-collapsed"
+		class="ui-form ui-form-section landing-form-gray-padding landing-form-collapsed"
 		id="landing-site-catalog-set-form"
 	>
 		<?= bitrix_sessid_post();?>

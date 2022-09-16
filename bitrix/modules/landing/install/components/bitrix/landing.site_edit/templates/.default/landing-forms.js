@@ -25,8 +25,8 @@ function deleteAccessRow(link)
 	BX.Landing.EditTitleForm = function (node, additionalWidth, isEventTargetNode, display)
 	{
 		this.btn = node.querySelector('.ui-title-input-btn-js');
-		this.label = node.querySelector('.ui-editable-field-label-js');
-		this.input = node.querySelector('.ui-editable-field-input-js');
+		this.label = node.querySelector('.landing-editable-field-label-js');
+		this.input = node.querySelector('.landing-editable-field-input-js');
 		this.additionalWidth = additionalWidth || 0;
 		this.input.IsWidthSet = false;
 		this.display = display;

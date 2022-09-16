@@ -393,6 +393,10 @@ class Landing
 				\Bitrix\Landing\Block::clearRepositoryCache();
 			}
 			self::saveDataToBlock($blockInstance, $block);
+			if ($blockFields['CONTENT'] ?? null)
+			{
+				$blockInstance->saveContent($blockFields['CONTENT'], $block['designed'] ?? false);
+			}
 			$blockInstance->save();
 			// if block is favorite
 			if (intval($block['meta']['LID'] ?? -1) === 0)

@@ -55,7 +55,7 @@ this.BX.Landing = this.BX.Landing || {};
 	  return Control;
 	}();
 
-	var _templateObject;
+	var _templateObject, _templateObject2;
 	var DesignPreview = /*#__PURE__*/function (_EventEmitter) {
 	  babelHelpers.inherits(DesignPreview, _EventEmitter);
 
@@ -90,7 +90,7 @@ this.BX.Landing = this.BX.Landing || {};
 	    value: function initLayout() {
 	      var _this2 = this;
 
-	      this.layout = this.createLayout();
+	      this.createLayout();
 	      this.styleNode = document.createElement("style");
 	      main_core.Dom.append(this.styleNode, this.layout);
 	      main_core.Dom.append(this.layout, this.form);
@@ -122,8 +122,7 @@ this.BX.Landing = this.BX.Landing || {};
 	          }
 	        });
 	      }, paramsObserver);
-	      var elementDesignPreview = document.querySelector('#' + this.id).parentNode;
-	      observer.observe(elementDesignPreview);
+	      observer.observe(this.layoutContent.parentNode);
 	    }
 	  }, {
 	    key: "initControls",
@@ -270,7 +269,7 @@ this.BX.Landing = this.BX.Landing || {};
 	      var isActiveColorPickerElement;
 
 	      if (colorPickerElement) {
-	        isActiveColorPickerElement = colorPickerElement.classList.contains('active');
+	        isActiveColorPickerElement = main_core.Dom.hasClass(colorPickerElement, 'active');
 	      }
 
 	      if (activeColorNode) {
@@ -470,21 +469,22 @@ this.BX.Landing = this.BX.Landing || {};
 	  }, {
 	    key: "createLayout",
 	    value: function createLayout() {
-	      return main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["<div class=\"landing-design-preview-wrap\"><div id=\"", "\" class=\"landing-design-preview\"><h2 class=\"landing-design-preview-title\">", "</h2><h4 class=\"landing-design-preview-subtitle\">", "</h4><p class=\"landing-design-preview-text\">", "</p><p class=\"landing-design-preview-text\">", "</p><div class=\"\"><a href=\"#\" class=\"landing-design-preview-button\">", "</a></div></div></div>"])), this.id, this.phrase.title, this.phrase.subtitle, this.phrase.text1, this.phrase.text2, this.phrase.button);
+	      this.layout = main_core.Tag.render(_templateObject || (_templateObject = babelHelpers.taggedTemplateLiteral(["<div class=\"landing-design-preview-wrap\"></div>"])));
+	      this.layoutContent = main_core.Tag.render(_templateObject2 || (_templateObject2 = babelHelpers.taggedTemplateLiteral(["<div id=\"", "\" class=\"landing-design-preview\"><h2 class=\"landing-design-preview-title\">", "</h2><h4 class=\"landing-design-preview-subtitle\">", "</h4><p class=\"landing-design-preview-text\">", "</p><p class=\"landing-design-preview-text\">", "</p><div class=\"\"><a class=\"landing-design-preview-button\">", "</a></div></div>"])), this.id, this.phrase.title, this.phrase.subtitle, this.phrase.text1, this.phrase.text2, this.phrase.button);
+	      main_core.Dom.append(this.layoutContent, this.layout);
 	    }
 	  }, {
 	    key: "fixElement",
 	    value: function fixElement() {
-	      var paddingDesignForm = 20;
-	      var designPreview = document.querySelector('#' + this.id);
-	      var designPreviewWrap = designPreview.parentNode;
+	      var designPreviewWrap = this.layoutContent.parentNode;
 	      var designPreviewWrapPosition = designPreviewWrap.getBoundingClientRect();
 	      var paddingDesignPreview = 20;
 	      var maxWidth = designPreviewWrapPosition.width - paddingDesignPreview * 2;
 	      var designForm = designPreviewWrap.parentNode;
 	      var designFormPosition = designForm.getBoundingClientRect();
-	      var designPreviewPosition = designPreview.getBoundingClientRect();
+	      var designPreviewPosition = this.layoutContent.getBoundingClientRect();
 	      var bodyWidth = document.body.clientWidth;
+	      var paddingDesignForm = 20;
 	      var positionFixedRight = bodyWidth - designFormPosition.right + paddingDesignForm;
 
 	      if (designFormPosition.height > designPreviewPosition.height) {
@@ -494,14 +494,13 @@ this.BX.Landing = this.BX.Landing || {};
 	        fixedStyle += 'margin-top: 0; ';
 	        fixedStyle += 'right: ' + positionFixedRight + 'px;';
 	        fixedStyle += 'max-width: ' + maxWidth + 'px;';
-	        designPreview.setAttribute("style", fixedStyle);
+	        this.layoutContent.setAttribute("style", fixedStyle);
 	      }
 	    }
 	  }, {
 	    key: "unFixElement",
 	    value: function unFixElement() {
-	      var designPreview = document.querySelector('#' + this.id);
-	      designPreview.setAttribute("style", '');
+	      this.layoutContent.setAttribute("style", '');
 	    }
 	  }, {
 	    key: "convertFont",

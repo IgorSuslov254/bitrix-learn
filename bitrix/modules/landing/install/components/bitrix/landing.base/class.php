@@ -1143,18 +1143,14 @@ class LandingBaseComponent extends \CBitrixComponent
 	 */
 	protected function getSpecialTypeSiteByLanding(Landing $landing): ?string
 	{
-		$specialType = null;
 		$meta = $landing->getMeta();
 
 		if ($meta['SITE_SPECIAL'] === 'Y')
 		{
-			if (preg_match('#^/' . Site\Type::PSEUDO_SCOPE_CODE_FORMS . '[\d]*/$#', $meta['SITE_CODE']))
-			{
-				$specialType = \Bitrix\Landing\Site\Type::PSEUDO_SCOPE_CODE_FORMS;
-			}
+			return Site\Type::getSiteTypeForms($meta['SITE_CODE']);
 		}
 
-		return $specialType;
+		return null;
 	}
 
 	/**

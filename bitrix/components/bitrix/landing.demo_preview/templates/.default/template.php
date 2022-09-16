@@ -23,8 +23,15 @@ Manager::setPageTitle(
 
 // extensions, css, js
 Extension::load([
-	'ui.buttons', 'ui.buttons.icons', 'ui.alerts', 'ui.progressbar', 'landing.settingsform.colorpickertheme'
+	'ui.design-tokens',
+	'ui.fonts.opensans',
+	'ui.buttons',
+	'ui.buttons.icons',
+	'ui.alerts',
+	'ui.progressbar',
+	'landing.settingsform.colorpickertheme',
 ]);
+
 CJSCore::init([
 	'landing_master', 'loader'
 ]);
@@ -106,10 +113,10 @@ else
                     <div class="pagetitle-wrap">
                         <div class="pagetitle-inner-container">
                             <div class="pagetitle landing-template-preview-title" id="landing-template-preview-title">
-								<span id="pagetitle" class="landing-template-preview-edit-title ui-editable-field-label-js">
+								<span id="pagetitle" class="landing-template-preview-edit-title landing-editable-field-label-js">
 									<?= htmlspecialcharsbx($template['TITLE']) ?>
 								</span>
-								<input type="text" data-name="title" class="landing-template-preview-input-title landing-template-preview-edit-input ui-editable-field-input-js" value="<?= htmlspecialcharsbx($template['TITLE']) ?>" style="display: none;">
+								<input type="text" data-name="title" class="landing-template-preview-input-title landing-template-preview-edit-input landing-editable-field-input-js" value="<?= htmlspecialcharsbx($template['TITLE']) ?>" style="display: none;">
 								<span class="landing-template-preview-edit-btn ui-title-input-btn-js"></span>
                             </div>
                         </div>
@@ -117,9 +124,9 @@ else
 
                     <div class="landing-template-preview-description">
                         <p id="landing-template-preview-description-text">
-							<span class="ui-editable-field-label-js"><?= htmlspecialcharsbx($template['DESCRIPTION']) ?></span>
+							<span class="landing-editable-field-label-js"><?= htmlspecialcharsbx($template['DESCRIPTION']) ?></span>
 							<span class="landing-template-preview-edit-btn ui-title-input-btn-js"></span>
-							<textarea data-name="description" class="landing-template-preview-input-description landing-template-preview-edit-textarea ui-editable-field-input-js" style="display: none;"><?= htmlspecialcharsbx($template['DESCRIPTION']) ?></textarea>
+							<textarea data-name="description" class="landing-template-preview-input-description landing-template-preview-edit-textarea landing-editable-field-input-js" style="display: none;"><?= htmlspecialcharsbx($template['DESCRIPTION']) ?></textarea>
 						</p>
 						<span class="landing-template-preview-notice"><?= Loc::getMessage('LANDING_PREVIEW_NOTICE') ?></span>
                     </div>

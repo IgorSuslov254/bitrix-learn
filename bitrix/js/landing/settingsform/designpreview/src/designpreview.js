@@ -1,6 +1,7 @@
 import { Dom, Event, Tag } from 'main.core';
 import { Control } from './internal/control';
 import { BaseEvent, EventEmitter } from 'main.core.events';
+import 'ui.design-tokens';
 
 import './css/style.css';
 
@@ -56,7 +57,7 @@ export class DesignPreview extends EventEmitter
 
 	initLayout()
 	{
-		this.layout = this.createLayout();
+		this.createLayout();
 		this.styleNode = document.createElement("style");
 		Dom.append(this.styleNode, this.layout);
 		Dom.append(this.layout, this.form);
@@ -94,8 +95,7 @@ export class DesignPreview extends EventEmitter
 				}
 			})
 		}, paramsObserver)
-		const elementDesignPreview = document.querySelector('#' + this.id).parentNode;
-		observer.observe(elementDesignPreview);
+		observer.observe(this.layoutContent.parentNode);
 	}
 
 	initControls()
@@ -128,7 +128,7 @@ export class DesignPreview extends EventEmitter
 				{
 					control.setClickHandler(this.applyStyles.bind(this));
 				}
-				
+
 				this.controls[group][key] = control;
 			}
 		}
@@ -156,7 +156,7 @@ export class DesignPreview extends EventEmitter
 				}
 			}
 		}
-		
+
 		if (this.controls.theme.corporateColor.node)
 		{
 			this.controls.theme.corporateColor.node.subscribe('onSelectCustomColor', this.applyStyles.bind(this));
@@ -245,7 +245,7 @@ export class DesignPreview extends EventEmitter
 		let isActiveColorPickerElement;
 		if (colorPickerElement)
 		{
-			isActiveColorPickerElement = colorPickerElement.classList.contains('active');
+			isActiveColorPickerElement = Dom.hasClass(colorPickerElement, 'active')
 		}
 
 		if (activeColorNode)
@@ -462,21 +462,22 @@ export class DesignPreview extends EventEmitter
 
 	createLayout(): HTMLDivElement
 	{
-		return Tag.render`<div class="landing-design-preview-wrap"><div id="${this.id}" class="landing-design-preview"><h2 class="landing-design-preview-title">${this.phrase.title}</h2><h4 class="landing-design-preview-subtitle">${this.phrase.subtitle}</h4><p class="landing-design-preview-text">${this.phrase.text1}</p><p class="landing-design-preview-text">${this.phrase.text2}</p><div class=""><a href="#" class="landing-design-preview-button">${this.phrase.button}</a></div></div></div>`;
+		this.layout = Tag.render`<div class="landing-design-preview-wrap"></div>`;
+		this.layoutContent = Tag.render`<div id="${this.id}" class="landing-design-preview"><h2 class="landing-design-preview-title">${this.phrase.title}</h2><h4 class="landing-design-preview-subtitle">${this.phrase.subtitle}</h4><p class="landing-design-preview-text">${this.phrase.text1}</p><p class="landing-design-preview-text">${this.phrase.text2}</p><div class=""><a class="landing-design-preview-button">${this.phrase.button}</a></div></div>`;
+		Dom.append(this.layoutContent, this.layout);
 	}
 
 	fixElement()
 	{
-		const paddingDesignForm = 20;
-		const designPreview = document.querySelector('#' + this.id);
-		const designPreviewWrap = designPreview.parentNode;
+		const designPreviewWrap = this.layoutContent.parentNode;
 		const designPreviewWrapPosition = designPreviewWrap.getBoundingClientRect();
 		const paddingDesignPreview = 20;
 		const maxWidth = designPreviewWrapPosition.width - (paddingDesignPreview * 2);
 		const designForm = designPreviewWrap.parentNode;
 		const designFormPosition = designForm.getBoundingClientRect();
-		const designPreviewPosition = designPreview.getBoundingClientRect();
+		const designPreviewPosition = this.layoutContent.getBoundingClientRect();
 		const bodyWidth = document.body.clientWidth;
+		const paddingDesignForm = 20;
 		const positionFixedRight = bodyWidth - designFormPosition.right + paddingDesignForm;
 		if (designFormPosition.height > designPreviewPosition.height)
 		{
@@ -486,14 +487,13 @@ export class DesignPreview extends EventEmitter
 			fixedStyle += 'margin-top: 0; ';
 			fixedStyle += 'right: '+ positionFixedRight + 'px;';
 			fixedStyle += 'max-width: '+ maxWidth + 'px;';
-			designPreview.setAttribute("style", fixedStyle);
+			this.layoutContent.setAttribute("style", fixedStyle);
 		}
 	}
 
 	unFixElement()
 	{
-		const designPreview = document.querySelector('#' + this.id);
-		designPreview.setAttribute("style", '');
+		this.layoutContent.setAttribute("style", '');
 	}
 
 	convertFont(font)
